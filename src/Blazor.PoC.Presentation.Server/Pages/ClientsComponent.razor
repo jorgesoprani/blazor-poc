@@ -1,0 +1,115 @@
+﻿@page "/clients"
+@inject MediatR.IMediator mediator
+@inject IJSRuntime JSRuntime
+<h3>Clients</h3>
+
+@if (model == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Created</th>
+                <th>Last Modified</th>
+                <th>
+                    <button class="btn btn-success" @onclick="@(() => ShowForm(null))">
+                        <span class="oi oi-plus" aria-hidden="true"></span>
+                    </button>
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var client in model.Clients)
+            {
+                <tr>
+                    <td>@client.Id</td>
+                    <td>@client.Name</td>
+                    <td>@client.Country</td>
+                    <td>@client.Created.ToShortDateString()</td>
+                    <td>@(client.LastModified?.ToShortDateString() ?? "-")</td>
+                    <th>
+                        <button class="btn btn-default" @onclick="@(() => ShowForm(client.Id))">
+                            <span class="oi oi-pencil" aria-hidden="true"></span>
+                        </button>
+                    </th>
+                    <th>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(client.Id))">
+                            <span class="oi oi-x" aria-hidden="true"></span>
+                        </button>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+    public App.Clients.Queries.GetClientList.ClientListVm model;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await UpdateList();
+    }
+
+    private async Task UpdateList()
+    {
+        model = await mediator.Send(new App.Clients.Queries.GetClientList.GetClientListQuery());
+    }
+
+    protected async Task ShowForm(int? id)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(ClientFormComponent.ClientId), id);
+        var modalRef = Modal.Show<ClientFormComponent>("Editing", parameters);
+
+        var result = await modalRef.Result;
+
+        OnSaved(id, result);
+    }
+
+    protected async Task Delete(int id)
+    {
+        var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete the client '{id}'?" );
+        if (!confirmed)
+            return;
+
+        await mediator.Send(new App.Clients.Commands.DeleteClient.DeleteClientCommand { Id = id });
+
+        var deletedClient = model.Clients.FirstOrDefault(x => x.Id == id);
+        model.Clients.Remove(deletedClient);
+
+    }
+
+    protected void OnSaved(int? id, ModalResult result)
+    {
+        if (result.Cancelled)
+        {
+            //TODO
+        }
+        else
+        {
+            var updatedClient = model.Clients.FirstOrDefault(x => x.Id == id);
+            var resultData = result.Data as App.Clients.Queries.GetClientDetail.ClientDetailVm;
+
+            if (updatedClient == null)
+            {
+                updatedClient = new();
+                updatedClient.Id = resultData.Id;
+                model.Clients.Add(updatedClient);
+            }
+            updatedClient.Name = resultData.Name;
+            updatedClient.Country = resultData.Country;
+            updatedClient.Created = resultData.Created;
+            updatedClient.LastModified = resultData.LastModified;
+        }
+    }
+}

@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Clients\Commands\" />
     <Folder Include="Common\Mappings\" />
   </ItemGroup>
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Blazor.PoC.Domain.Entities
 {
-    public class Client
+    public class Client : AuditableEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -11,10 +11,6 @@ Welcome to your new app.
 
     protected override async Task OnInitializedAsync()
     {
-        var teste = await Mediator.Send(new App.Clients.Queries.GetClientList.GetClientListQuery());
-
-        var asString = Json.JsonSerializer.Serialize(teste);
-
-        Test = asString;
+        var teste = await Mediator.Send(new App.System.Commands.SeedSampleData.SeedSampleDataCommand());
     }
 }
