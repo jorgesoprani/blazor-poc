@@ -1,4 +1,5 @@
-using Blazor.PoC.Presentation.Server.Data;
+using Blazor.PoC.Application;
+using Blazor.PoC.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +29,9 @@ namespace Blazor.PoC.Presentation.Server
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+
+            services.AddInfrastructure(Configuration);
+            services.AddApplication();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
