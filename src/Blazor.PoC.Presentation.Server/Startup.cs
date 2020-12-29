@@ -1,5 +1,6 @@
 using Blazor.PoC.Application;
 using Blazor.PoC.Infrastructure;
+using Blazor.PoC.Presentation.Server.Services;
 using Blazored.Modal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -35,6 +36,7 @@ namespace Blazor.PoC.Presentation.Server
             services.AddApplication();
 
             services.AddBlazoredModal();
+            services.AddBlazorToastr();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

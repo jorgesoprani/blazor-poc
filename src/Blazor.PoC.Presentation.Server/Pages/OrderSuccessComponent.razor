@@ -1,0 +1,94 @@
+﻿@page "/ordersuccessful/{OrderId:int}"
+@inject MediatR.IMediator mediator
+<div class="content">
+    @if (notFound)
+    {
+        <p>Order not found</p>
+
+    }
+    else if (order != null)
+    {
+        <div class="col-lg-8 col-md-8 mx-auto">
+            <div class="widget">
+                <div class="order-detail-form text-center">
+                    <div class="col-lg-10 col-md-10 mx-auto order-done">
+                        <i class="oi oi-circle-check" style="font-size: 115px; color: #4bd98a;"></i>
+                        <h2 class="text-success">Thank you for your purchace @order.ClientName! Your Order has been Accepted..</h2>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">#</th>
+                                    <th class="text-left">Unit price</th>
+                                    <th class="text-left">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in order.Items)
+                                {
+                                    <tr>
+                                        <td class="text-left">@item.Title</td>
+                                        <td class="text-left">@item.OriginalUnitPrice.ToString("C") x @item.Quantity</td>
+                                        <td class="text-left">@item.OriginalPrice.ToString("C")</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td class="text-left" colspan="2">SubTotal</td>
+                                    <td class="text-left">@((order.SubTotal ?? 0).ToString("C"))</td>
+                                </tr>
+                                @if (order.Discounts != 0)
+                                {
+                                    <tr>
+                                        <td class="text-left" colspan="2">Discounts</td>
+                                        <td class="text-left">@order.Discounts.ToString("C")</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td class="text-left" colspan="2">Total</td>
+                                    <td class="text-left">@((order.Total ?? 0).ToString("C"))</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="cart_navigation text-center">
+                        <NavLink href="store" class="btn btn-primary">Return to store</NavLink>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Loading...</p>
+    }
+</div>
+
+<style>
+    .widget {
+        background-color: #fff;
+        border-radius: 4px;
+        box-shadow: 0 0 6px rgba(193,193,193,0.62);
+        display: inline-block;
+        padding: 20px;
+        position: relative;
+        width: 100%;
+    }
+</style>
+
+@code {
+    [Parameter] public int OrderId { get; set; }
+
+    private bool notFound = false;
+
+    private App.Store.Queries.GetOrderDetails.OrderDetailsVm order;
+
+    protected override async Task OnInitializedAsync()
+    {
+        order = await mediator.Send(new App.Store.Queries.GetOrderDetails.GetOrderDetailsQuery { OrderId = OrderId });
+
+        notFound = order == null;
+
+        await base.OnInitializedAsync();
+    }
+}

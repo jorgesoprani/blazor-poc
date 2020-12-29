@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.PoC.Presentation.Api
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Common", "4 - Common", "{416F9310-BA55-4082-A2E5-FFC3851CFF0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.PoC.Common", "Blazor.PoC.Common\Blazor.PoC.Common.csproj", "{7D2DB8F4-183A-4780-9911-A45E38E67E31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.PoC.Common", "Blazor.PoC.Common\Blazor.PoC.Common.csproj", "{7D2DB8F4-183A-4780-9911-A45E38E67E31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -34,7 +34,7 @@ namespace Blazor.PoC.Application.Clients.Queries.GetClientList
 
             return new()
             {
-                Clients = list
+                Items = list
             };
         }
     }

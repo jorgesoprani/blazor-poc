@@ -9,9 +9,16 @@ namespace Blazor.PoC.Domain.Entities
 {
     public class Client : AuditableEntity
     {
+        public Client()
+        {
+            Orders = new HashSet<Order>();
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Country { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
     }
 }

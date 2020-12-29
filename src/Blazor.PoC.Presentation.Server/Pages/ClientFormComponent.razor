@@ -1,6 +1,5 @@
 ﻿@page "/client"
 @page "/client/{ClientId:int}"
-@inject MediatR.IMediator mediator;
 
 @if (clientDetails == null)
 {
@@ -19,81 +18,37 @@ else
 
     <hr />
 
-    <form>
+    <EditForm Model="clientDetails" OnValidSubmit="Save">
         <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="Name" class="control-label">Name</label>
-                    <input form="Name" class="form-control" @bind="clientDetails.Name" />
+                    <InputText name="Name" class="form-control" @bind-Value="clientDetails.Name" />
                 </div>
             </div>
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="Country" class="control-label">Country</label>
-                    <select form="Country" class="form-control" @bind="clientDetails.Country">
+                    <InputSelect name="Country" class="form-control" @bind-Value="clientDetails.Country">
+                        <option value="">Select</option>
                         @foreach (var country in CountryOptions)
                         {
-                            <option>@country</option>
+                            <option value="@country">@country</option>
                         }
-                    </select>
+                    </InputSelect>
                 </div>
             </div>
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="Email" class="control-label">Email</label>
-                    <input type="email" form="Email" class="form-control" @bind="clientDetails.Email" />
+                    <InputText type="email" name="Email" class="form-control" @bind-Value="clientDetails.Email" />
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="form-group">
-                <input type="button" class="btn btn-success" @onclick="Save" value="Save" />
+                <input type="submit" class="btn btn-success" value="Save" />
             </div>
         </div>
-    </form>
-}
-
-
-@code {
-    [Parameter] public int? ClientId { get; set; }
-    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
-
-    public App.Clients.Queries.GetClientDetail.ClientDetailVm clientDetails;
-    public string[] CountryOptions = new[] { "Brazil", "Canada", "UK", "Germany", "Mexico", "Sweden" };
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (ClientId.HasValue)
-        {
-            clientDetails = await mediator.Send(new App.Clients.Queries.GetClientDetail.GetClientDetailQuery { Id = ClientId.Value });
-        }
-        else
-        {
-            clientDetails = new();
-        }
-    }
-
-    protected async Task Save()
-    {
-        App.Clients.Queries.GetClientDetail.ClientDetailVm updatedClient;
-        if (ClientId.HasValue)
-            updatedClient = await mediator.Send(new App.Clients.Commands.UpdateClient.UpdateClientCommand
-            {
-                Id = ClientId.Value,
-                Country = clientDetails.Country,
-                Email = clientDetails.Email,
-                Name = clientDetails.Name
-            });
-        else
-            updatedClient = await mediator.Send(new App.Clients.Commands.CreateClient.CreateClientCommand
-            {
-                Country = clientDetails.Country,
-                Email = clientDetails.Email,
-                Name = clientDetails.Name
-            });
-
-        clientDetails = updatedClient;
-
-        await ModalInstance.Close(ModalResult.Ok(updatedClient));
-    }
+    </EditForm>
 }

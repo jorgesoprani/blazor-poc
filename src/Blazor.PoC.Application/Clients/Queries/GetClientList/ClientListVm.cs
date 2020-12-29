@@ -8,6 +8,6 @@ namespace Blazor.PoC.Application.Clients.Queries.GetClientList
 {
     public class ClientListVm
     {
-        public IList<ClientListDto> Clients { get; set; }
+        public IList<ClientListDto> Items { get; set; }
     }
 }

@@ -13,12 +13,22 @@ namespace Blazor.PoC.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Client> builder)
         {
+            builder.ToTable("Clients");
+
             builder.Property(e => e.Id)
                 .HasColumnName("ClientId");
 
-            builder.Property(e => e.Name).HasMaxLength(100);
+            builder.Property(e => e.Name)
+                .HasMaxLength(100)
+                .IsRequired();
 
-            builder.Property(e => e.Country).HasMaxLength(100);
+            builder.Property(e => e.Email)
+                .HasMaxLength(255)
+                .IsRequired();
+
+            builder.Property(e => e.Country)
+                .HasMaxLength(100)
+                .IsRequired();
         }
     }
 

@@ -1,0 +1,63 @@
+﻿@page "/products"
+<h3>Products</h3>
+
+<div class="content">
+    @if (model == null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-success" @onclick="@(() => ShowForm(null))">
+                    <span class="oi oi-plus" aria-hidden="true"></span>
+                    Add new
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table table-borderless table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                            <th>Created</th>
+                            <th>Last Modified</th>
+                            <th>
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in model.Items)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Name</td>
+                                <td>$ @item.Price.ToString("N2")</td>
+                                <td>@item.Discount %</td>
+                                <td>@item.Created.ToShortDateString()</td>
+                                <td>@(item.LastModified?.ToShortDateString() ?? "-")</td>
+                                <th>
+                                    <button class="btn btn-default" @onclick="@(() => ShowForm(item.Id))">
+                                        <i class="oi oi-pencil" aria-hidden="true"></i>
+                                    </button>
+                                </th>
+                                <th>
+                                    <button class="btn btn-primary btn-outline-danger" @onclick="@(() => Delete(item.Id))">
+                                        <i class="oi oi-x" aria-hidden="true"></i>
+                                    </button>
+                                </th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
