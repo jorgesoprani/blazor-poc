@@ -50,6 +50,8 @@ namespace Blazor.PoC.Presentation.Api
             services.AddInfrastructure(Configuration);
             services.AddApplication();
 
+
+            var test = Configuration.GetConnectionString("Blazor");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
