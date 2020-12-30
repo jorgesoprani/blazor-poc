@@ -1,0 +1,42 @@
+﻿@page "/product"
+@page "/product/{ClientId:int}"
+
+@if (productDetails == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    @if (ProductId.HasValue)
+    {
+        <h6>Editing '@productDetails.Name'</h6>
+    }
+    else
+    {
+        <h6>New product</h6>
+    }
+
+    <hr />
+
+    <form>
+        <div class="row">
+            <FormFieldComponent Label="Name">
+                <input name="Name" class="form-control" @bind="productDetails.Name" />
+            </FormFieldComponent>
+            <FormFieldComponent Label="Description">
+                <textarea name="Description" class="form-control" @bind="productDetails.Description" />
+            </FormFieldComponent>
+            <FormFieldComponent Label="Price">
+                <input type="number" step="0.01" min="0.01" max="999999999999" name="Price" class="form-control" @bind="productDetails.Price" />
+            </FormFieldComponent>
+            <FormFieldComponent Label="Discount">
+                <input type="number" step="0.01" min="0.00" max="100" name="Discount" class="form-control" @bind="productDetails.Discount" />
+            </FormFieldComponent>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <input type="button" class="btn btn-success" @onclick="Save" value="Save" />
+            </div>
+        </div>
+    </form>
+}

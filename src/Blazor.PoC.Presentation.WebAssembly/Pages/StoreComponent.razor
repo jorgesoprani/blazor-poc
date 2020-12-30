@@ -1,0 +1,55 @@
+﻿@page "/store"
+<h3>Store</h3>
+
+<div class="content">
+    @if (model == null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <div class="row" style="padding-bottom: 15px">
+            <div class="col-md-3">
+                <button class="btn btn-success" @onclick="PlaceOrderAsync">
+                    <span class="oi oi-plus" aria-hidden="true"></span>
+                    Place order
+                </button>
+            </div>
+            <div class="col-md-3">
+                Total: $ @model.Items.Sum(x => x.ItemWithDiscount * x.Quantity).ToString("N2")
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Fake login</span>
+                    </div>
+                    <select class="form-control" @bind="selectedClient">
+                        <option value="0">Select the client</option>
+                        @foreach (var client in model.FakeAuthenticationOptions)
+                        {
+                            <option value="@client.ClientId">@client.ClientName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            @foreach (var item in model.Items)
+            {
+                <StoreProductComponent Item="item">
+                    <div class="input-group">
+                        <button type="button" class="btn btn-success" @onclick="() => ChangeQuantity(item, false)">
+                            <i class="oi oi-minus" aria-hidden="true"></i>
+                        </button>
+                        <input class="form-control" type="number" step="1" min="0" max="999" @bind-value="item.Quantity" />
+                        <button type="button" class="btn btn-success" @onclick="() => ChangeQuantity(item, true)">
+                            <i class="oi oi-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </StoreProductComponent>
+            }
+        </div>
+
+    }
+</div>

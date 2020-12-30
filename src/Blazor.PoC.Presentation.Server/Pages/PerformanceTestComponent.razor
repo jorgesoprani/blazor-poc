@@ -1,0 +1,116 @@
+﻿@page "/performance"
+
+@if (model != null)
+{
+    var monthNames = new Dictionary<int, string>();
+    for (int i = 1; i <= 12; i++)
+    {
+        monthNames.Add(i, new DateTime(2020, i, 1).ToString("MMM"));
+    }
+    <div class="content">
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Category</th>
+                        @for (int year = model.MinYear; year <= model.MaxYear; year++)
+                        {
+                            <th colspan="13">@year</th>
+                        }
+                    </tr>
+                    <tr>
+                        @for (int year = model.MinYear; year <= model.MaxYear; year++)
+                        {
+                            @for (int month = 1; month <= 12; month++)
+                            {
+                                <th nowrap>@monthNames[month]/@year</th>
+                            }
+                            <th nowrap>Total @year</th>
+                        }
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var group in model.Categories.GroupBy(x => x.Group))
+                    {
+                        var groupTotal = group.SelectMany(x => x.Years).SelectMany(x => x.Months).Sum(x => x.Value);
+                        <tr class="tr-group">
+                            <td nowrap>@group.Key</td>
+
+                            @for (int year = model.MinYear; year <= model.MaxYear; year++)
+                            {
+                                var yearBudgets = group.SelectMany(x => x.Years).Where(x => x.Year == year).ToList();
+
+                                @for (int month = 1; month <= 12; month++)
+                                {
+                                    var monthBudget = yearBudgets.SelectMany(x => x.Months).Where(x => x.Month == month).Sum(x => x.Value);
+
+                                    <td>@((monthBudget ?? 0).ToString("N2"))</td>
+                                }
+
+                                var yearTotal = yearBudgets.SelectMany(x => x.Months).Sum(x => x.Value);
+                                <td>@((yearTotal ?? 0).ToString("N2"))</td>
+                            }
+                            <td>@((groupTotal ?? 0).ToString("N2"))</td>
+                        </tr>
+
+                        @foreach (var category in group)
+                        {
+                            <tr>
+                                <td nowrap>@category.Category</td>
+
+
+                                @for (int year = model.MinYear; year <= model.MaxYear; year++)
+                                {
+                                    var yearBudget = category.Years.Single(x => x.Year == year);
+
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        var monthBudget = yearBudget.Months.Single(x => x.Month == month);
+
+                                        <td><input class="form-control input-budget" type="number" @bind:event="oninput" @bind="monthBudget.Value" /> </td>
+                                    }
+                                    <td>@yearBudget.Months.Sum(x => x.Value) </td>
+                                }
+                                <td>@((category.Years.Sum(y => y.Months.Sum(m => m.Value)) ?? 0).ToString("N2"))</td>
+                            </tr>
+                        }
+                    }
+                    @{
+                        var total = model.Categories.SelectMany(x => x.Years).SelectMany(x => x.Months).Sum(x => x.Value);
+                        <tr class="tr-group">
+                            <td nowrap>Total</td>
+
+                            @for (int year = model.MinYear; year <= model.MaxYear; year++)
+                            {
+                                var yearBudgets = model.Categories.SelectMany(x => x.Years).Where(x => x.Year == year).ToList();
+
+                                @for (int month = 1; month <= 12; month++)
+                                {
+                                    var monthBudget = yearBudgets.SelectMany(x => x.Months).Where(x => x.Month == month).Sum(x => x.Value);
+
+                                    <td>@((monthBudget ?? 0).ToString("N2"))</td>
+                                }
+
+                                var yearTotal = yearBudgets.SelectMany(x => x.Months).Sum(x => x.Value);
+                                <td>@((yearTotal ?? 0).ToString("N2"))</td>
+                            }
+                            <td>@((total ?? 0).ToString("N2"))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<style>
+    .input-budget {
+        min-width: 100px;
+    }
+
+    .tr-group td {
+        background-color: rgb(5, 39, 103);
+        color: white;
+    }
+</style>

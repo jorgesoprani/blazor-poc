@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,18 +22,24 @@ namespace Blazor.PoC.Presentation.Server.Pages
         [Parameter] public int? ClientId { get; set; }
         [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
 
-        public ClientDetailVm clientDetails;
+        public ClientFormData model;
         public string[] CountryOptions = new[] { "Brazil", "Canada", "UK", "Germany", "Mexico", "Sweden" };
 
         protected override async Task OnInitializedAsync()
         {
             if (ClientId.HasValue)
             {
-                clientDetails = await _mediator.Send(new GetClientDetailQuery { Id = ClientId.Value });
+                var itemToEdit = await _mediator.Send(new GetClientDetailQuery { Id = ClientId.Value });
+                model = new ClientFormData
+                {
+                    Name = itemToEdit.Name,
+                    Country = itemToEdit.Country,
+                    Email = itemToEdit.Email,
+                };
             }
             else
             {
-                clientDetails = new();
+                model = new();
             }
         }
 
@@ -43,22 +50,30 @@ namespace Blazor.PoC.Presentation.Server.Pages
                 updatedClient = await _mediator.Send(new UpdateClientCommand
                 {
                     Id = ClientId.Value,
-                    Country = clientDetails.Country,
-                    Email = clientDetails.Email,
-                    Name = clientDetails.Name
+                    Country = model.Country,
+                    Email = model.Email,
+                    Name = model.Name
                 });
             else
                 updatedClient = await _mediator.Send(new CreateClientCommand
                 {
-                    Country = clientDetails.Country,
-                    Email = clientDetails.Email,
-                    Name = clientDetails.Name
+                    Country = model.Country,
+                    Email = model.Email,
+                    Name = model.Name
                 });
-
-            clientDetails = updatedClient;
 
             await _notifications.ShowInfo("Saved");
             await ModalInstance.Close(ModalResult.Ok(updatedClient));
+        }
+
+        public class ClientFormData
+        {
+            [Required]
+            public string Name { get; set; }
+            [Required]
+            public string Country { get; set; }
+            [Required, EmailAddress]
+            public string Email { get; set; }
         }
 
     }

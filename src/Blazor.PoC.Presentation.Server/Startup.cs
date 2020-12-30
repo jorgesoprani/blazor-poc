@@ -2,6 +2,9 @@ using Blazor.PoC.Application;
 using Blazor.PoC.Infrastructure;
 using Blazor.PoC.Presentation.Server.Services;
 using Blazored.Modal;
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +40,12 @@ namespace Blazor.PoC.Presentation.Server
 
             services.AddBlazoredModal();
             services.AddBlazorToastr();
+            services.AddBlazorise(options =>
+                {
+                    options.ChangeTextOnKeyPress = true;
+                })
+                .AddBootstrapProviders()
+                .AddFontAwesomeIcons();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +66,10 @@ namespace Blazor.PoC.Presentation.Server
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.ApplicationServices
+              .UseBootstrapProviders()
+              .UseFontAwesomeIcons();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,0 +1,72 @@
+// 20201230151747
+// https://bitbucket.org/cvachon_panthera/sync/raw/2e1f2ea8f83afe795eb68453b0ac1ffb63c694f5/Application/Panthera.Sync/Panthera.Sync/nswag.json
+
+{
+  "runtime": "NetCore31",
+  "defaultVariables": null,
+  "documentGenerator": {
+    "aspNetCoreToOpenApi": {
+      "project": "Blazor.PoC.Presentation.Api.csproj",
+      "msBuildProjectExtensionsPath": null,
+      "configuration": null,
+      "runtime": null,
+      "targetFramework": null,
+      "noBuild": true,
+      "verbose": false,
+      "workingDirectory": null,
+      "requireParametersWithoutDefault": true,
+      "apiGroupNames": null,
+      "defaultPropertyNameHandling": "CamelCase",
+      "defaultReferenceTypeNullHandling": "Null",
+      "defaultDictionaryValueReferenceTypeNullHandling": "NotNull",
+      "defaultResponseReferenceTypeNullHandling": "NotNull",
+      "defaultEnumHandling": "Integer",
+      "flattenInheritanceHierarchy": false,
+      "generateKnownTypes": true,
+      "generateEnumMappingDescription": false,
+      "generateXmlObjects": false,
+      "generateAbstractProperties": false,
+      "generateAbstractSchemas": true,
+      "ignoreObsoleteProperties": false,
+      "allowReferencesWithProperties": false,
+      "excludedTypeNames": [
+
+      ],
+      "serviceHost": null,
+      "serviceBasePath": null,
+      "serviceSchemes": [
+
+      ],
+      "infoTitle": "Blazor PoC",
+      "infoDescription": null,
+      "infoVersion": "1.0.0",
+      "documentTemplate": null,
+      "documentProcessorTypes": [
+
+      ],
+      "operationProcessorTypes": [
+
+      ],
+      "typeNameGeneratorType": null,
+      "schemaNameGeneratorType": null,
+      "contractResolverType": null,
+      "serializerSettingsType": null,
+      "useDocumentProvider": false,
+      "documentName": "v1",
+      "aspNetCoreEnvironment": null,
+      "createWebHostBuilderMethod": null,
+      "startupType": null,
+      "allowNullableBodyParameters": true,
+      "output": "wwwroot/swagger/specification.json",
+      "outputType": "OpenApi3",
+      "assemblyPaths": [
+
+      ],
+      "assemblyConfig": null,
+      "referencePaths": [
+
+      ],
+      "useNuGetCache": false
+    }
+  }
+}

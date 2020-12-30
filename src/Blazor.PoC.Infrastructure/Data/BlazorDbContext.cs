@@ -54,5 +54,16 @@ namespace Blazor.PoC.Infrastructure.Data
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BlazorDbContext).Assembly);
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.LogTo(Log);
+        }
+
+        private void Log(string message)
+        {
+            System.Diagnostics.Debug.Print(message);
+        }
     }
 }

@@ -1,3 +1,5 @@
+using Blazor.PoC.Application;
+using Blazor.PoC.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Blazor.PoC.Presentation.Api
 {
     public class Startup
     {
+        readonly string AllowSpecificOrigins = "_allowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,12 +28,28 @@ namespace Blazor.PoC.Presentation.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      //Allowing everything as this is just a test PoC
+                                      builder.AllowAnyHeader();
+                                      builder.AllowAnyOrigin();
+                                      builder.AllowAnyMethod();
+                                  });
+            });
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Blazor.PoC.Presentation.Api", Version = "v1" });
+
+            services.AddOpenApiDocument(config => {
+                config.Version = "v1";
+                config.Title = "Blazor PoC API";
             });
+
+            services.AddInfrastructure(Configuration);
+            services.AddApplication();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,13 +58,18 @@ namespace Blazor.PoC.Presentation.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Blazor.PoC.Presentation.Api v1"));
+
+                app.UseOpenApi();
+                app.UseSwaggerUi3(settings => {
+                    settings.Path = "/swagger";
+                });
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(AllowSpecificOrigins);
 
             app.UseAuthorization();
 

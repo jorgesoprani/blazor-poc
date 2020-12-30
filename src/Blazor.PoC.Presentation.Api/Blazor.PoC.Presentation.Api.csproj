@@ -1,13 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" NoWarn="NU1605" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.1" NoWarn="NU1605" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" NoWarn="NU1605" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.1" NoWarn="NU1605" />
+		<PackageReference Include="NSwag.AspNetCore" Version="13.9.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Blazor.PoC.Application\Blazor.PoC.Application.csproj" />
+		<ProjectReference Include="..\Blazor.PoC.Common\Blazor.PoC.Common.csproj" />
+		<ProjectReference Include="..\Blazor.PoC.Infrastructure\Blazor.PoC.Infrastructure.csproj" />
+	</ItemGroup>
 
 </Project>

@@ -1,0 +1,63 @@
+﻿@page "/dashboard"
+@inject ApiService _api
+
+<div class="content">
+    @if (isLoaded)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <PizzaChartComponent DataSource="ordersByCountryDataSource"></PizzaChartComponent>
+            </div>
+            <div class="col-md-6">
+                <BarChartComponent DataSource="mostOrderedProductsDataSource"></BarChartComponent>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Loading...</p>
+    }
+</div>
+
+@code {
+    private ChartVm ordersByCountryDataSource;
+    private ChartVm mostOrderedProductsDataSource;
+    private bool isLoaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await SetOrdersByCountry();
+        await SetMostOrderedProducts();
+        isLoaded = true;
+    }
+
+    private async Task SetOrdersByCountry()
+    {
+        System.Diagnostics.Debug.Print("Sending GetOrdersByCountryQuery");
+        var ordersByCountry = await _api.Store.GetOrdersByCountryAsync();
+        ordersByCountryDataSource = new ChartVm
+        {
+            Series = ordersByCountry.Items.Select(x => new ChartSeries
+            {
+                Category = x.Country,
+                Quantity = x.Quantity,
+                Value = (double)x.TotalValue
+            }).ToList()
+        };
+    }
+
+    private async Task SetMostOrderedProducts()
+    {
+        System.Diagnostics.Debug.Print("Sending GetOrdersByCountryQuery");
+        var mostOrderedProducts = await _api.Store.GetMostOrderedProductsAsync();
+        mostOrderedProductsDataSource = new ChartVm
+        {
+            Series = mostOrderedProducts.Items.Select(x => new ChartSeries
+            {
+                Category = x.Title,
+                Quantity = (double)x.TotalDiscount,
+                Value = (double)x.TotalValue
+            }).ToList()
+        };
+    }
+}

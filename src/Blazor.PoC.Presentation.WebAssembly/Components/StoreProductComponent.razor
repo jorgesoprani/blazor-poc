@@ -1,0 +1,25 @@
+﻿<div class="col-lg-4 col-md-6 mb-4">
+    <div class="card h-100">
+        <a href="#"><img class="card-img-top" src="https://dummyimage.com/700x400/aaa/fff" alt=""></a>
+        <div class="card-body">
+            <h4 class="card-title">
+                <a href="#">@Item.Name</a>
+            </h4>
+            @if (Item.Discount > 0)
+            {
+                <strike style="color: red;">$ @Item.Price.ToString("N2")</strike> <span style="color: green;">- @Item.Discount.ToString("N0")%</span>
+            }
+            <h5 style="color: green;">$ @Item.ItemWithDiscount.ToString("N2")</h5>
+            <p class="card-text">@Item.Description</p>
+        </div>
+        <div class="card-footer">
+            @ChildContent
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Api.StoreProductDto Item { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}
