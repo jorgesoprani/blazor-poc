@@ -22,8 +22,9 @@ namespace Blazor.PoC.Presentation.WebAssembly
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
-
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44342") });
+        
+            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44342") });
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://blazor-tests-api.azurewebsites.net/") });
             builder.Services.AddScoped<ApiService>();
 
             builder.Services.AddBlazoredModal();
@@ -35,8 +36,6 @@ namespace Blazor.PoC.Presentation.WebAssembly
                 })
                 .AddBootstrapProviders()
                 .AddFontAwesomeIcons();
-
-
 
             var host = builder.Build();
 

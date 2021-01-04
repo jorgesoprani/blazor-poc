@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>43e99607-f396-4e21-8592-b66fd0da35ad</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,10 @@
     <ProjectReference Include="..\Blazor.PoC.Application\Blazor.PoC.Application.csproj" />
     <ProjectReference Include="..\Blazor.PoC.Domain\Blazor.PoC.Domain.csproj" />
     <ProjectReference Include="..\Blazor.PoC.Infrastructure\Blazor.PoC.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

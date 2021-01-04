@@ -22,18 +22,18 @@ namespace Blazor.PoC.Presentation.Server
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration(builder =>
-                {
-                    var root = builder.Build();
-                    var vaultName = root["KeyVault:Name"];
-                    var clientId = root["KeyVault:ClientId"];
-                    var thumbprint = root["KeyVault:Thumbprint"];
-                    var certificate = GetCertificate(thumbprint);
+                //.ConfigureAppConfiguration(builder =>
+                //{
+                //    var root = builder.Build();
+                //    var vaultName = root["KeyVault:Name"];
+                //    var clientId = root["KeyVault:ClientId"];
+                //    var thumbprint = root["KeyVault:Thumbprint"];
+                //    var certificate = GetCertificate(thumbprint);
 
-                    var secretManager = new PrefixKeyVaultSecretManager("BlazorPoC");
+                //    var secretManager = new PrefixKeyVaultSecretManager("BlazorPoC");
 
-                    builder.AddAzureKeyVault($"https://{vaultName}.vault.azure.net", clientId, certificate, secretManager);
-                })
+                //    builder.AddAzureKeyVault($"https://{vaultName}.vault.azure.net", clientId, certificate, secretManager);
+                //})
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
@@ -47,7 +47,7 @@ namespace Blazor.PoC.Presentation.Server
             {
                 store.Open(OpenFlags.ReadOnly);
 
-                var certificateCollection = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, true);
+                var certificateCollection = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, false);
                 if (certificateCollection.Count > 0)
                     return certificateCollection[0];
 

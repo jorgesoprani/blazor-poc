@@ -21,18 +21,18 @@ namespace Blazor.PoC.Presentation.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration(builder =>
-                {
-                    var root = builder.Build();
-                    var vaultName = root["KeyVault:Name"];
-                    var clientId = root["KeyVault:ClientId"];
-                    var thumbprint = root["KeyVault:Thumbprint"];
-                    var certificate = GetCertificate(thumbprint.ToLower());
+                //.ConfigureAppConfiguration(builder =>
+                //{
+                //    var root = builder.Build();
+                //    var vaultName = root["KeyVault:Name"];
+                //    var clientId = root["KeyVault:ClientId"];
+                //    var thumbprint = root["KeyVault:Thumbprint"];
+                //    var certificate = GetCertificate(thumbprint.ToLower());
 
-                    var secretManager = new PrefixKeyVaultSecretManager("BlazorPoC");
+                //    var secretManager = new PrefixKeyVaultSecretManager("BlazorPoC");
 
-                    builder.AddAzureKeyVault($"https://{vaultName}.vault.azure.net", clientId, certificate, secretManager);
-                })
+                //    builder.AddAzureKeyVault($"https://{vaultName}.vault.azure.net", clientId, certificate, secretManager);
+                //})
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

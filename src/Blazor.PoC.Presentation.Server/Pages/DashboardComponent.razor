@@ -2,8 +2,7 @@
 @inject MediatR.IMediator mediator
 
 <div class="content">
-    @if (isLoaded)
-    {
+    @if (isLoaded) {
         <div class="row">
             <div class="col-md-6">
                 <PizzaChartComponent DataSource="ordersByCountryDataSource"></PizzaChartComponent>
@@ -12,9 +11,7 @@
                 <BarChartComponent DataSource="mostOrderedProductsDataSource"></BarChartComponent>
             </div>
         </div>
-    }
-    else
-    {
+    } else {
         <p>Loading...</p>
     }
 </div>
@@ -24,21 +21,17 @@
     private ChartVm mostOrderedProductsDataSource;
     private bool isLoaded = false;
 
-    protected override async Task OnInitializedAsync()
-    {
+    protected override async Task OnInitializedAsync() {
         await SetOrdersByCountry();
         await SetMostOrderedProducts();
         isLoaded = true;
     }
 
-    private async Task SetOrdersByCountry()
-    {
+    private async Task SetOrdersByCountry() {
         System.Diagnostics.Debug.Print("Sending GetOrdersByCountryQuery");
         var ordersByCountry = await mediator.Send(new App.Store.Queries.GetOrdersByCountry.GetOrdersByCountryQuery());
-        ordersByCountryDataSource = new ChartVm
-        {
-            Series = ordersByCountry.Items.Select(x => new ChartSeries
-            {
+        ordersByCountryDataSource = new ChartVm {
+            Series = ordersByCountry.Items.Select(x => new ChartSeries {
                 Category = x.Country,
                 Quantity = x.Quantity,
                 Value = (double)x.TotalValue
@@ -46,14 +39,11 @@
         };
     }
 
-    private async Task SetMostOrderedProducts()
-    {
+    private async Task SetMostOrderedProducts() {
         System.Diagnostics.Debug.Print("Sending GetOrdersByCountryQuery");
         var mostOrderedProducts = await mediator.Send(new App.Store.Queries.GetMostOrderedProducts.GetMostOrderedProductsQuery());
-        mostOrderedProductsDataSource = new ChartVm
-        {
-            Series = mostOrderedProducts.Items.Select(x => new ChartSeries
-            {
+        mostOrderedProductsDataSource = new ChartVm {
+            Series = mostOrderedProducts.Items.Select(x => new ChartSeries {
                 Category = x.Title,
                 Quantity = (double)x.TotalDiscount,
                 Value = (double)x.TotalValue
