@@ -47,6 +47,8 @@ namespace Blazor.PoC.Presentation.Server
                 .AddBootstrapProviders()
                 .AddFontAwesomeIcons();
 
+            services.AddTelerikBlazor();
+
             var test = Configuration.GetConnectionString("Blazor");
         }
 

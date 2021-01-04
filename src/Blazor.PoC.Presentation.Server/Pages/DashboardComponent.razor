@@ -1,5 +1,4 @@
 ﻿@page "/dashboard"
-@inject MediatR.IMediator mediator
 
 <div class="content">
     @if (isLoaded) {
@@ -15,39 +14,3 @@
         <p>Loading...</p>
     }
 </div>
-
-@code {
-    private ChartVm ordersByCountryDataSource;
-    private ChartVm mostOrderedProductsDataSource;
-    private bool isLoaded = false;
-
-    protected override async Task OnInitializedAsync() {
-        await SetOrdersByCountry();
-        await SetMostOrderedProducts();
-        isLoaded = true;
-    }
-
-    private async Task SetOrdersByCountry() {
-        System.Diagnostics.Debug.Print("Sending GetOrdersByCountryQuery");
-        var ordersByCountry = await mediator.Send(new App.Store.Queries.GetOrdersByCountry.GetOrdersByCountryQuery());
-        ordersByCountryDataSource = new ChartVm {
-            Series = ordersByCountry.Items.Select(x => new ChartSeries {
-                Category = x.Country,
-                Quantity = x.Quantity,
-                Value = (double)x.TotalValue
-            }).ToList()
-        };
-    }
-
-    private async Task SetMostOrderedProducts() {
-        System.Diagnostics.Debug.Print("Sending GetOrdersByCountryQuery");
-        var mostOrderedProducts = await mediator.Send(new App.Store.Queries.GetMostOrderedProducts.GetMostOrderedProductsQuery());
-        mostOrderedProductsDataSource = new ChartVm {
-            Series = mostOrderedProducts.Items.Select(x => new ChartSeries {
-                Category = x.Title,
-                Quantity = (double)x.TotalDiscount,
-                Value = (double)x.TotalValue
-            }).ToList()
-        };
-    }
-}

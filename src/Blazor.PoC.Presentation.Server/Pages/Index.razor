@@ -3,14 +3,3 @@
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
-
-<p>@Test</p>
-
-@code {
-    public string Test { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var teste = await Mediator.Send(new App.System.Commands.SeedSampleData.SeedSampleDataCommand());
-    }
-}

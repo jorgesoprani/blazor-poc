@@ -1,0 +1,27 @@
+﻿@page "/dashboard-telerik"
+
+<div class="content">
+    @if (!isLoaded) {
+        <p>Loading...</p>
+    } else {
+        <div class="row">
+            <div class="col-md-6">
+                <TelerikChart>
+                    <ChartSeriesItems>
+                        <ChartSeries Type="ChartSeriesType.Pie" Data="@ordersByCountryDataSource.Series"
+                                     Field="@nameof(ChartVmSeries.Value)" CategoryField="@nameof(ChartVmSeries.Category)">
+                        </ChartSeries>
+                    </ChartSeriesItems>
+
+                    <ChartTitle Text="Revenue per country"></ChartTitle>
+
+                    <ChartLegend Position="ChartLegendPosition.Right">
+                    </ChartLegend>
+                </TelerikChart>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+    }
+</div>

@@ -7,10 +7,10 @@ namespace Blazor.PoC.Presentation.Server.Data
 {
     public class ChartVm
     {
-        public List<ChartSeries> Series { get; set; }
+        public List<ChartVmSeries> Series { get; set; }
     }
 
-    public class ChartSeries
+    public class ChartVmSeries
     {
         public string Category { get; set; }
         public double Quantity { get; set; }
