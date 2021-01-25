@@ -1,0 +1,30 @@
+﻿@page "/dashboard-dx"
+
+<div class="content">
+    @if (!isLoaded) {
+        <p>Loading...</p>
+    } else {
+        <div class="row">
+            <div class="col-md-6">
+                <DevExpress.Blazor.DxChart Data="@ordersByCountryDataSource.Series">
+                    <DevExpress.Blazor.DxChartTitle Text="Revenue per country " />
+                    <DevExpress.Blazor.DxChartLegend VerticalAlignment="DevExpress.Blazor.VerticalEdge.Bottom" Position="DevExpress.Blazor.RelativePosition.Outside" />
+                    <DevExpress.Blazor.DxChartPieSeries ArgumentField="@((ChartVmSeries i) => i.Category)"
+                                         ValueField="@((ChartVmSeries i) => i.Value)"
+                                         Name="Total">
+                    </DevExpress.Blazor.DxChartPieSeries>
+                </DevExpress.Blazor.DxChart>
+            </div>
+            <div class="col-md-6">
+                <DevExpress.Blazor.DxChart Data="@ordersByCountryDataSource.Series">
+                    <DevExpress.Blazor.DxChartTitle Text="Most Ordered Produts" />
+                    <DevExpress.Blazor.DxChartLegend VerticalAlignment="DevExpress.Blazor.VerticalEdge.Bottom" Position="DevExpress.Blazor.RelativePosition.Outside" />
+                    <DevExpress.Blazor.DxChartBarSeries ArgumentField="@((ChartVmSeries i) => i.Category)"
+                                                        ValueField="@((ChartVmSeries i) => i.Value)"
+                                                        Name="Total">
+                    </DevExpress.Blazor.DxChartBarSeries>
+                </DevExpress.Blazor.DxChart>
+            </div>
+        </div>
+    }
+</div>

@@ -1,5 +1,7 @@
 ﻿@page "/"
 @inject MediatR.IMediator Mediator
+@using Microsoft.Extensions.Configuration
 <h1>Hello, world!</h1>
-
+@inject TestSettings settings
+@inject IConfiguration config
 Welcome to your new app.

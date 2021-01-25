@@ -6,20 +6,32 @@
     } else {
         <div class="row">
             <div class="col-md-6">
-                <TelerikChart>
-                    <ChartSeriesItems>
-                        <ChartSeries Type="ChartSeriesType.Pie" Data="@ordersByCountryDataSource.Series"
+                <Telerik.Blazor.Components.TelerikChart>
+                    <Telerik.Blazor.Components.ChartSeriesItems>
+                        <Telerik.Blazor.Components.ChartSeries Type="Telerik.Blazor.ChartSeriesType.Pie" Data="@ordersByCountryDataSource.Series"
                                      Field="@nameof(ChartVmSeries.Value)" CategoryField="@nameof(ChartVmSeries.Category)">
-                        </ChartSeries>
-                    </ChartSeriesItems>
+                        </Telerik.Blazor.Components.ChartSeries>
+                    </Telerik.Blazor.Components.ChartSeriesItems>
 
-                    <ChartTitle Text="Revenue per country"></ChartTitle>
+                    <Telerik.Blazor.Components.ChartTitle Text="Revenue per country"></Telerik.Blazor.Components.ChartTitle>
 
-                    <ChartLegend Position="ChartLegendPosition.Right">
-                    </ChartLegend>
-                </TelerikChart>
+                    <Telerik.Blazor.Components.ChartLegend Position="Telerik.Blazor.ChartLegendPosition.Right">
+                    </Telerik.Blazor.Components.ChartLegend>
+                </Telerik.Blazor.Components.TelerikChart>
             </div>
             <div class="col-md-6">
+                <Telerik.Blazor.Components.TelerikChart>
+                    <Telerik.Blazor.Components.ChartSeriesItems>
+                        <Telerik.Blazor.Components.ChartSeries Type="Telerik.Blazor.ChartSeriesType.Bar" Name="Product 1" Data="@mostOrderedProductsDataSource.Series"
+                                     Field="@nameof(ChartVmSeries.Value)" CategoryField="@nameof(ChartVmSeries.Category)">
+                        </Telerik.Blazor.Components.ChartSeries>
+                    </Telerik.Blazor.Components.ChartSeriesItems>
+
+                    <Telerik.Blazor.Components.ChartTitle Text="Most ordered products"></Telerik.Blazor.Components.ChartTitle>
+
+                    <Telerik.Blazor.Components.ChartLegend Position="Telerik.Blazor.ChartLegendPosition.Right">
+                    </Telerik.Blazor.Components.ChartLegend>
+                </Telerik.Blazor.Components.TelerikChart>
 
             </div>
         </div>
