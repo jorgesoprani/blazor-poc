@@ -18,6 +18,7 @@ namespace Blazor.PoC.Domain.Entities
         public string Name { get; set; }
         public string Email { get; set; }
         public string Country { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         public ICollection<Order> Orders { get; set; }
     }

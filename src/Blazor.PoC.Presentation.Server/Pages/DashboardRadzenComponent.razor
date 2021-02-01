@@ -1,0 +1,34 @@
+﻿@page "/dashboard-radzen"
+
+@using Syncfusion.Blazor.Charts
+
+<div class="content">
+    @if (!isLoaded) {
+        <p>Loading...</p>
+    } else {
+        <div class="row">
+            <div class="col-md-6">
+                <Radzen.Blazor.RadzenChart>
+                    <Radzen.Blazor.RadzenPieSeries Data="@ordersByCountryDataSource.Series"
+                                                   Title="Ordes By Country"
+                                                   CategoryProperty="@nameof(ChartVmSeries.Category)"
+                                                   ValueProperty="@nameof(ChartVmSeries.Value)" />
+                </Radzen.Blazor.RadzenChart>
+            </div>
+            <div class="col-md-6">
+                <Radzen.Blazor.RadzenChart>
+                    <Radzen.Blazor.RadzenBarSeries Data="@ordersByCountryDataSource.Series"
+                                                   CategoryProperty="@nameof(ChartVmSeries.Category)"
+                                                   Title="2020"
+                                                   LineType="Radzen.Blazor.LineType.Dashed"
+                                                   ValueProperty="@nameof(ChartVmSeries.Value)" />
+                    <Radzen.Blazor.RadzenValueAxis Formatter="@FormatAsUSD">
+                        <Radzen.Blazor.RadzenGridLines Visible="true" />
+                        <Radzen.Blazor.RadzenAxisTitle Text="Revenue in USD" />
+                    </Radzen.Blazor.RadzenValueAxis>
+                    <Radzen.Blazor.RadzenBarOptions Radius="5" />
+                </Radzen.Blazor.RadzenChart>
+            </div>
+        </div>
+    }
+</div>

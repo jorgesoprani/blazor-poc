@@ -10,32 +10,28 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Blazor.PoC.Application.Clients.Commands.CreateClient
-{
-    public class CreateClientCommand : IRequest<ClientDetailVm>
-    {
+namespace Blazor.PoC.Application.Clients.Commands.CreateClient {
+    public class CreateClientCommand : IRequest<ClientDetailVm> {
         public string Name { get; set; }
         public string Email { get; set; }
         public string Country { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 
-    public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, ClientDetailVm>
-    {
+    public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, ClientDetailVm> {
         private readonly IBlazorDbContext _context;
         private readonly IMapper _mapper;
-        public CreateClientCommandHandler(IBlazorDbContext context, IMapper mapper)
-        {
+        public CreateClientCommandHandler(IBlazorDbContext context, IMapper mapper) {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<ClientDetailVm> Handle(CreateClientCommand request, CancellationToken cancellationToken)
-        {
-            var client = new Client
-            {
+        public async Task<ClientDetailVm> Handle(CreateClientCommand request, CancellationToken cancellationToken) {
+            var client = new Client {
                 Name = request.Name,
                 Country = request.Country,
-                Email = request.Email,                
+                Email = request.Email,
+                DateOfBirth = request.DateOfBirth
             };
 
             _context.Clients.Add(client);

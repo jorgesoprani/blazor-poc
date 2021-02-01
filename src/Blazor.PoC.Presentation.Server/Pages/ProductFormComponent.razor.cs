@@ -59,7 +59,7 @@ namespace Blazor.PoC.Presentation.Server.Pages
             productDetails = updatedProduct;
 
             await _notifications.ShowInfo("Saved");
-            await ModalInstance.Close(ModalResult.Ok(updatedProduct));
+            await ModalInstance.CloseAsync(ModalResult.Ok(updatedProduct));
         }
 
     }

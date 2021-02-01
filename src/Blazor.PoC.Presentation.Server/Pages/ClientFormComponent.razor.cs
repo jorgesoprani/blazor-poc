@@ -63,7 +63,7 @@ namespace Blazor.PoC.Presentation.Server.Pages
                 });
 
             await _notifications.ShowInfo("Saved");
-            await ModalInstance.Close(ModalResult.Ok(updatedClient));
+            await ModalInstance.CloseAsync(ModalResult.Ok(updatedClient));
         }
 
         public class ClientFormData

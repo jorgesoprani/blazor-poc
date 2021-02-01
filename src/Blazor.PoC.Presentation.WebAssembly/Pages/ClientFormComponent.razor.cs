@@ -32,6 +32,7 @@ namespace Blazor.PoC.Presentation.WebAssembly.Pages
                     Name = itemToEdit.Name,
                     Country = itemToEdit.Country,
                     Email = itemToEdit.Email,
+                    DateOfBirth = itemToEdit.DateOfBirth
                 };
             }
             else
@@ -49,14 +50,16 @@ namespace Blazor.PoC.Presentation.WebAssembly.Pages
                     Id = ClientId.Value,
                     Country = model.Country,
                     Email = model.Email,
-                    Name = model.Name
+                    Name = model.Name,
+                    DateOfBirth = model.DateOfBirth
                 });
             else
                 updatedClient = await _api.Clients.CreateAsync(new CreateClientCommand
                 {
                     Country = model.Country,
                     Email = model.Email,
-                    Name = model.Name
+                    Name = model.Name,
+                    DateOfBirth = model.DateOfBirth
                 });
 
             await _notifications.ShowInfo("Saved");
@@ -71,6 +74,8 @@ namespace Blazor.PoC.Presentation.WebAssembly.Pages
             public string Country { get; set; }
             [Required, EmailAddress]
             public string Email { get; set; }
+            [Required]
+            public DateTime DateOfBirth { get; set; }
         }
 
     }

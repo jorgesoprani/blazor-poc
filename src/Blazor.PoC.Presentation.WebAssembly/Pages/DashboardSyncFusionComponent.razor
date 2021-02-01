@@ -1,0 +1,51 @@
+﻿@page "/dashboard"
+
+@using Syncfusion.Blazor.Charts
+
+<div class="content">
+    @if (!isLoaded) {
+        <p>Loading...</p>
+    } else {
+        <div class="row">
+            <div class="col-md-6">
+                <SfAccumulationChart Title="Ordes By Country" EnableAnimation="true" Theme="@Syncfusion.Blazor.Theme.Bootstrap4">
+                    <AccumulationChartTooltipSettings Enable="true"></AccumulationChartTooltipSettings>
+                    <AccumulationChartLegendSettings Visible="false"></AccumulationChartLegendSettings>
+                    <AccumulationChartSeriesCollection>
+                        <AccumulationChartSeries DataSource="@ordersByCountryDataSource.Series"
+                                                 XName="@nameof(ChartVmSeries.Category)" YName="@nameof(ChartVmSeries.Value)"
+                                                 Name="Browser"
+                                                 Radius="@OuterRadius"
+                                                 StartAngle="@StartAngle"
+                                                 EndAngle="@EndAngle"
+                                                 InnerRadius="0%" ExplodeIndex="@ExplodeIndex" Explode="true" ExplodeOffset="@ExplodeRadius">
+                            <AccumulationDataLabelSettings Visible="true" Name="@nameof(ChartVmSeries.Category)" Position="AccumulationLabelPosition.Outside"></AccumulationDataLabelSettings>
+                        </AccumulationChartSeries>
+                    </AccumulationChartSeriesCollection>
+                </SfAccumulationChart>
+            </div>
+            <div class="col-md-6">
+                <SfChart Title="Most ordered products" Theme="@Syncfusion.Blazor.Theme.Bootstrap4">
+                    <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
+                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Title="Food">
+                        <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+                    </ChartPrimaryXAxis>
+                    <ChartPrimaryYAxis LabelFormat="{value}B" EdgeLabelPlacement="EdgeLabelPlacement.Shift">
+                        <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                        <ChartAxisLabelStyle Color="transparent"></ChartAxisLabelStyle>
+                        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                        <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+                    </ChartPrimaryYAxis>
+                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+                    <ChartSeriesCollection>
+                        <ChartSeries DataSource="@mostOrderedProductsDataSource.Series" XName="@nameof(ChartVmSeries.Category)" YName="@nameof(ChartVmSeries.Value)" Name="Products" Width="2" Type="ChartSeriesType.Bar">
+                            <ChartMarker>
+                                <ChartDataLabel Visible="true" Position="LabelPosition.Top"></ChartDataLabel>
+                            </ChartMarker>
+                        </ChartSeries>
+                    </ChartSeriesCollection>
+                </SfChart>
+            </div>
+        </div>
+    }
+</div>

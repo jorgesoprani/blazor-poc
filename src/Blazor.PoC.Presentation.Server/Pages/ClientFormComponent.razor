@@ -2,18 +2,12 @@
 @page "/client/{ClientId:int}"
 
 <div class="content" style="min-width: 800px">
-    @if (model == null)
-    {
+    @if (model == null) {
         <p>Loading...</p>
-    }
-    else
-    {
-        @if (ClientId.HasValue)
-        {
+    } else {
+        @if (ClientId.HasValue) {
             <h6>Editing '@model.Name'</h6>
-        }
-        else
-        {
+        } else {
             <h6>New client</h6>
         }
 
@@ -22,6 +16,11 @@
         <EditForm Model="model" OnValidSubmit="Save">
             <DataAnnotationsValidator />
             <ValidationSummary />
+
+            <div class="form-group">
+                <label for="Test" class="control-label">Test</label>
+                <Syncfusion.Blazor.Inputs.SfNumericTextBox TValue="double?" Value=10></Syncfusion.Blazor.Inputs.SfNumericTextBox>
+            </div>
             <div class="form-group">
                 <label for="Name" class="control-label">Name</label>
                 <InputText name="Name" class="form-control" @bind-Value="model.Name" />
@@ -30,8 +29,7 @@
                 <label for="Country" class="control-label">Country</label>
                 <InputSelect name="Country" class="form-control" @bind-Value="model.Country">
                     <option value="">Select</option>
-                    @foreach (var country in CountryOptions)
-                        {
+                    @foreach (var country in CountryOptions) {
                         <option value="@country">@country</option>
                         }
                 </InputSelect>

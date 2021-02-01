@@ -7,8 +7,14 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" NoWarn="NU1605" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.1" NoWarn="NU1605" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.2" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault" Version="3.1.10" />
-		<PackageReference Include="NSwag.AspNetCore" Version="13.9.4" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1-beta1" />
+		<PackageReference Include="NSwag.AspNetCore" Version="13.10.1" />
+		<PackageReference Include="NSwag.MSBuild" Version="13.10.1">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -16,5 +22,8 @@
 		<ProjectReference Include="..\Blazor.PoC.Common\Blazor.PoC.Common.csproj" />
 		<ProjectReference Include="..\Blazor.PoC.Infrastructure\Blazor.PoC.Infrastructure.csproj" />
 	</ItemGroup>
-
+  
+	<Target Name="NSwag" AfterTargets="Build" Condition="$(Configuration) == 'Debug'">
+			<Exec Command="$(NSwagExe_Net50) run nswag.json /variables:Configuration=$(Configuration)" />
+	</Target>
 </Project>

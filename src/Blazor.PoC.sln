@@ -22,6 +22,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.PoC.Infrastructure", "Blazor.PoC.Infrastructure\Blazor.PoC.Infrastructure.csproj", "{6570D70C-94F7-4F2E-AE57-6E771DECB1DF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.PoC.Presentation.WebAssembly", "Blazor.PoC.Presentation.WebAssembly\Blazor.PoC.Presentation.WebAssembly.csproj", "{36F5E5B6-E572-45FA-89BC-08A3F9F3CAD3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FA03885C-86F2-4EDA-BE69-6FAD416AFB80} = {FA03885C-86F2-4EDA-BE69-6FAD416AFB80}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.PoC.Presentation.Api", "Blazor.PoC.Presentation.Api\Blazor.PoC.Presentation.Api.csproj", "{FA03885C-86F2-4EDA-BE69-6FAD416AFB80}"
 EndProject

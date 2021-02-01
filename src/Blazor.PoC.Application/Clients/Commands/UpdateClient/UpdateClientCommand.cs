@@ -19,6 +19,7 @@ namespace Blazor.PoC.Application.Clients.Commands.UpdateClient
         public string Name { get; set; }
         public string Email { get; set; }
         public string Country { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 
     public class UpdateClientCommandHandler : IRequestHandler<UpdateClientCommand, ClientDetailVm>
@@ -37,6 +38,7 @@ namespace Blazor.PoC.Application.Clients.Commands.UpdateClient
             client.Name = request.Name;
             client.Country = request.Country;
             client.Email = request.Email;
+            client.DateOfBirth = request.DateOfBirth;
 
             await _context.SaveChangesAsync(cancellationToken);
 
